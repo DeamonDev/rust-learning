@@ -54,13 +54,17 @@ pub fn run(dir: &PathBuf) -> Result<(), Box<dyn Error>> {
             let modified: DateTime<Local> = DateTime::from(metadata.modified()?);
             let mode = metadata.permissions().mode();
 
-            println!(
-                "{} {:>5} {} {}",
-                parse_permissions(mode),
-                size,
-                modified.format("%_d %b %H:%M").to_string(),
-                file_name
-            );
+            if file_name.starts_with(".") {
+                continue;
+            } else {
+                println!(
+                    "{} {:>5} {} {}",
+                    parse_permissions(mode),
+                    size,
+                    modified.format("%_d %b %H:%M").to_string(),
+                    file_name
+                );
+            }
         }
     }
     Ok(())
