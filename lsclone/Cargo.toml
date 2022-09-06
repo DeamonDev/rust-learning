@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "lsclone"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-add_one = { path = "../add_one" }
-lsclone = { path = "../lsclone" }
+chrono = "0.4.22"
+libc = "0.2.132"
 structopt = "0.3.26"

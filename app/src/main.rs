@@ -1,10 +1,12 @@
+use std::process;
+
 use add_one;
+use structopt::StructOpt;
 
 fn main() {
-    let num = 10;
-    println!(
-      "Hello world! {num} plus one is {}!",
-      add_one::add_one(num)
-    )
-
+  let opt = lsclone::Opt::from_args();
+  if let Err(ref e) = lsclone::run(&opt.path) {
+      println!("{}", e);
+      process::exit(1);
+  }
 }

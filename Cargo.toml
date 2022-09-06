@@ -2,5 +2,6 @@
 members = [
   "app",
   "add_one",
+  "lsclone",
 ]
 
