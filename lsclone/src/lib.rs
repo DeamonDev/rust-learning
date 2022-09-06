@@ -17,6 +17,8 @@ use structopt::StructOpt;
 pub struct Opt {
     #[structopt(default_value = ".", parse(from_os_str))]
     pub path: PathBuf,
+    #[structopt(short = "a", long = "all")]
+    pub show_hidden_files: bool,
 }
 
 fn parse_permissions(mode: u32) -> String {
@@ -40,7 +42,7 @@ fn triplet(mode: u32, read: u32, write: u32, execute: u32) -> String {
     .to_string()
 }
 
-pub fn run(dir: &PathBuf) -> Result<(), Box<dyn Error>> {
+pub fn run(dir: &PathBuf, show_hidden_files: bool) -> Result<(), Box<dyn Error>> {
     if dir.is_dir() {
         for entry in fs::read_dir(dir)? {
             let entry = entry?;
@@ -50,11 +52,12 @@ pub fn run(dir: &PathBuf) -> Result<(), Box<dyn Error>> {
                 .into_string()
                 .or_else(|f| Err(format!("Invalid entry: {:?}", f)))?;
 
+            let is_hidden_file = file_name.starts_with(".");
             let size = metadata.len();
             let modified: DateTime<Local> = DateTime::from(metadata.modified()?);
             let mode = metadata.permissions().mode();
 
-            if file_name.starts_with(".") {
+            if is_hidden_file && !show_hidden_files {
                 continue;
             } else {
                 println!(
