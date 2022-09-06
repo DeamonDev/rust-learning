@@ -1,0 +1,6 @@
+[workspace]
+members = [
+  "app",
+  "add_one",
+]
+
