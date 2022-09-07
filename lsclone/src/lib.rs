@@ -53,7 +53,6 @@ pub fn run(dir: &PathBuf, show_hidden_files: bool) -> Result<(), Box<dyn Error>>
                 .into_string()
                 .or_else(|f| Err(format!("Invalid entry: {:?}", f)))?;
 
-            let file_name_literal = file_name.as_str();
 
             let is_hidden_file = file_name.starts_with(".");
             let size = metadata.len();
@@ -79,18 +78,6 @@ pub fn run(dir: &PathBuf, show_hidden_files: bool) -> Result<(), Box<dyn Error>>
                     file_name.bold().green()
                 )
             }
-/* 
-            if is_hidden_file && !show_hidden_files {
-                continue;
-            } else {
-                println!(
-                    "{} {:>5} {} {}",
-                    parse_permissions(mode),
-                    size,
-                    modified.format("%_d %b %H:%M").to_string(),
-                    file_name.bold()
-                );
-            } */
         }
     }
     Ok(())

@@ -15,7 +15,7 @@ fn main() {
         process::exit(1);
     }
 
-    println!(
+/*     println!(
         "{}, {}, {}, {}, {}, {}, and some normal text.",
         format!("Bold").bold(),
         format!("Red").red(),
@@ -23,7 +23,7 @@ fn main() {
         format!("Green Strikethrough").green().strikethrough(),
         format!("Blue Underline").blue().underline(),
         format!("Purple Italics").purple().italic()
-    );
+    ); */
 
     /*     let x = 3;
     let r;
