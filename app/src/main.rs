@@ -1,6 +1,5 @@
 use std::process;
 
-use add_one;
 use structopt::StructOpt;
 
 fn main() {
