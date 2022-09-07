@@ -3,6 +3,7 @@ extern crate libc;
 #[macro_use]
 extern crate structopt;
 
+use colored::Colorize;
 use libc::{S_IRGRP, S_IROTH, S_IRUSR, S_IWGRP, S_IWOTH, S_IWUSR, S_IXGRP, S_IXOTH, S_IXUSR};
 use std::error::Error;
 use std::fs;
@@ -52,11 +53,33 @@ pub fn run(dir: &PathBuf, show_hidden_files: bool) -> Result<(), Box<dyn Error>>
                 .into_string()
                 .or_else(|f| Err(format!("Invalid entry: {:?}", f)))?;
 
+            let file_name_literal = file_name.as_str();
+
             let is_hidden_file = file_name.starts_with(".");
             let size = metadata.len();
             let modified: DateTime<Local> = DateTime::from(metadata.modified()?);
             let mode = metadata.permissions().mode();
 
+            if is_hidden_file && !show_hidden_files {
+                continue;
+            } else if !is_hidden_file {
+                println!(
+                    "{} {:>5} {} {}",
+                    parse_permissions(mode),
+                    size,
+                    modified.format("%_d %b %H:%M").to_string(),
+                    file_name.bold().white()
+                )
+            } else {
+                println!(
+                    "{} {:>5} {} {}",
+                    parse_permissions(mode),
+                    size,
+                    modified.format("%_d %b %H:%M").to_string(),
+                    file_name.bold().green()
+                )
+            }
+/* 
             if is_hidden_file && !show_hidden_files {
                 continue;
             } else {
@@ -65,9 +88,9 @@ pub fn run(dir: &PathBuf, show_hidden_files: bool) -> Result<(), Box<dyn Error>>
                     parse_permissions(mode),
                     size,
                     modified.format("%_d %b %H:%M").to_string(),
-                    file_name
+                    file_name.bold()
                 );
-            }
+            } */
         }
     }
     Ok(())

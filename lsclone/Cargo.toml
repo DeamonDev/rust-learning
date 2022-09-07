@@ -7,5 +7,6 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.22"
+colored = "2.0.0"
 libc = "0.2.132"
 structopt = "0.3.26"
